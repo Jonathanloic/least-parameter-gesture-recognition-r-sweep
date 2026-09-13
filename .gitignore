@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+data/
+results/
+
+*.pt
+*.pth
+*.ckpt
