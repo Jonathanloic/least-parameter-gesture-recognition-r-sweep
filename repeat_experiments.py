@@ -11,6 +11,7 @@ from statistics import mean, pstdev
 MODEL_CHOICES = (
     "least_parameters",
     "least_parameters_channel_temporal",
+    "least_parameters_temporal",
     "least_parameters_se",
     "least_parameters_eca",
 )

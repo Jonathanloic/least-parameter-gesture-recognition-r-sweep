@@ -73,6 +73,19 @@ LEAST_PARAMETERS_CHANNEL_TEMPORAL_CONFIG = {
     },
 }
 
+LEAST_PARAMETERS_TEMPORAL_CONFIG = {
+    **LEAST_PARAMETERS_CONFIG,
+    "name": "least_parameters_temporal",
+    "model": {
+        **LEAST_PARAMETERS_CONFIG["model"],
+        "attention": {
+            "type": "temporal",
+            "placement": "after_relu_before_dropout",
+            "temporal_kernel_size": 7,
+        },
+    },
+}
+
 LEAST_PARAMETERS_SE_CONFIG = {
     **LEAST_PARAMETERS_CONFIG,
     "name": "least_parameters_se",
@@ -106,6 +119,7 @@ LEAST_PARAMETERS_ECA_CONFIG = {
 MODEL_CONFIGS = {
     "least_parameters": LEAST_PARAMETERS_CONFIG,
     "least_parameters_channel_temporal": LEAST_PARAMETERS_CHANNEL_TEMPORAL_CONFIG,
+    "least_parameters_temporal": LEAST_PARAMETERS_TEMPORAL_CONFIG,
     "least_parameters_se": LEAST_PARAMETERS_SE_CONFIG,
     "least_parameters_eca": LEAST_PARAMETERS_ECA_CONFIG,
 }
@@ -129,6 +143,7 @@ def parse_args() -> argparse.Namespace:
         choices=(
             "least_parameters",
             "least_parameters_channel_temporal",
+            "least_parameters_temporal",
             "least_parameters_se",
             "least_parameters_eca",
         ),
