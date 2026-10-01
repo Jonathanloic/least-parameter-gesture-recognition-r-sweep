@@ -16,12 +16,14 @@ from model import build_least_parameters_model, count_trainable_parameters
 from model_attention import build_least_parameters_channel_temporal_model
 from model_se import build_least_parameters_se_model
 from model_eca import build_least_parameters_eca_model
+from model_temporal import build_least_parameters_temporal_model
 from reproducibility import make_generator, seed_worker, set_global_seed
 
 
 EXPECTED_PARAMETER_COUNTS = {
     "least_parameters": 1802,
     "least_parameters_eca": 1814,
+    "least_parameters_temporal": 1858,
 }
 
 
@@ -45,6 +47,13 @@ def build_selected_model(
             "placement": "after_relu_before_dropout",
             "order": "channel_then_temporal",
             "channel_reduction_ratio": channel_reduction_ratio,
+            "temporal_kernel_size": 7,
+        }
+    elif model_name == "least_parameters_temporal":
+        model = build_least_parameters_temporal_model(in_channels=4, num_classes=6)
+        attention = {
+            "type": "temporal",
+            "placement": "after_relu_before_dropout",
             "temporal_kernel_size": 7,
         }
     elif model_name == "least_parameters_se":
@@ -322,6 +331,9 @@ def run_fold(
     elif config.model_name == "least_parameters_se":
         print("Attention:            SE after each ReLU")
         print(f"SE reduction r:       {config.se_reduction_ratio}")
+    elif config.model_name == "least_parameters_temporal":
+        print("Attention:            Temporal only after each ReLU")
+        print("Temporal kernel:      7")
     elif config.model_name == "least_parameters_eca":
         print("Attention:            ECA channel attention after each ReLU")
         print("ECA gamma, b:         2, 1")
